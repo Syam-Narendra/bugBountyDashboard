@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Progress } from "~/components/ui/progress";
 
-const data = [
+export const data = [
   {
     id: 1,
     title: "XSS Vulnerability",
