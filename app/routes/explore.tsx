@@ -3,13 +3,19 @@ import { data } from "./home"; // assuming data includes a 'language' property
 import { FaSearch } from "react-icons/fa";
 
 const Explore = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
 
-  const programmingLanguages = ["JavaScript", "Python", "Java", "C++", "Go"];
+  const programmingLanguages: string[] = [
+    "JavaScript",
+    "Python",
+    "Java",
+    "C++",
+    "Go",
+  ];
 
   // Handle language filter changes
-  const handleLanguageChange = (language) => {
+  const handleLanguageChange = (language: string) => {
     setSelectedLanguages((prevSelected) =>
       prevSelected.includes(language)
         ? prevSelected.filter((lang) => lang !== language)
@@ -26,9 +32,9 @@ const Explore = () => {
   );
 
   return (
-    <div className="bg-black text-gray-100 min-h-screen flex flex-col sm:flex-row items-start px-4 sm:px-6 lg:p-8">
+    <div className="bg-black text-gray-100 min-h-screen flex flex-col sm:flex-row px-4 sm:px-6 lg:p-8">
       {/* Sidebar for filters */}
-      <div className="w-full sm:w-1/4 lg:w-1/5 p-4 bg-[#131213] rounded-lg shadow-lg mb-8 sm:mb-0 sm:mr-8">
+      <div className="w-full sm:w-1/4 lg:w-1/5 h-full p-4 bg-[#131213] rounded-lg shadow-lg mb-8 sm:mb-0 sm:mr-8 flex-shrink-0">
         <h2 className="text-xl font-semibold mb-4">Filter by Language</h2>
         <div className="space-y-2">
           {programmingLanguages.map((language) => (
@@ -75,7 +81,9 @@ const Explore = () => {
               >
                 <div>
                   <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-gray-400 mb-4">Reporter: {item.reporter}</p>
+                  <p className="text-gray-400 mb-4">
+                    Reporter: {item.reporter}
+                  </p>
                   <p>{item.description}</p>
                 </div>
                 <button className="bg-blue-600 text-white px-4 py-2 self-end rounded-lg hover:bg-blue-700 transition">
