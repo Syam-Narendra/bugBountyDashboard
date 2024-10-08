@@ -9,6 +9,7 @@ import type { LinksFunction } from "@remix-run/node";
 
 import "./tailwind.css";
 import Dashboard from "./customComponents/Dashboard";
+import { useEffect } from "react";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -33,7 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Dashboard/>
+        <Dashboard />
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -42,6 +43,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
-  return <Outlet />;
+export default function App({ pageProps }: { pageProps: any }) {
+  useEffect(() => {
+    document.documentElement.classList.add("dark");
+  }, []);
+  return <Outlet {...pageProps} />;
 }

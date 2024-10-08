@@ -3,37 +3,86 @@ import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Progress } from "~/components/ui/progress";
 
-
 export const data = [
   {
     id: 1,
-    title: "XSS Vulnerability",
-    description: "Stored XSS vulnerability found in the user profile page.",
-    reporter: "Aarav",
+    title: "SQL Injection in Login Endpoint",
+    description:
+      "A SQL injection vulnerability exists in the 'authenticateUser' method in LoginService.java, allowing attackers to manipulate the login query.",
+    language: "Java",
+    reporter: "Aisha",
   },
   {
     id: 2,
-    title: "SQL Injection",
-    description: "SQL injection vulnerability detected in the login form.",
-    reporter: "Vihaan",
+    title: "Goroutine Leak in HTTP Server",
+    description:
+      "In the Go application, the HTTP server creates goroutines for each incoming request but fails to properly close them, causing a memory leak over time.",
+    language: "Go",
+    reporter: "Ravi",
   },
   {
     id: 3,
-    title: "Insecure Direct Object Reference",
-    description: "Insecure access to user data without proper authorization.",
-    reporter: "Reyansh",
+    title: "NullPointerException in Payment Processing",
+    description:
+      "NullPointerException occurs when calling 'processPayment' in PaymentService.java without verifying if the payment object is null.",
+    language: "Java",
+    reporter: "Suresh",
   },
   {
     id: 4,
-    title: "Sensitive Data Exposure",
-    description: "Sensitive information is exposed in the error messages.",
-    reporter: "Anaya",
+    title: "Race Condition in Data Sync",
+    description:
+      "A race condition in the Go application's data synchronization process leads to inconsistent state between distributed services.",
+    language: "Go",
+    reporter: "Megha",
   },
   {
     id: 5,
-    title: "Cross-Site Request Forgery (CSRF)",
-    description: "CSRF vulnerability in the account settings update form.",
-    reporter: "Aisha",
+    title: "Cross-Site Scripting (XSS) in User Profile",
+    description:
+      "The user profile form in ProfileService.java does not sanitize input, making it vulnerable to stored XSS attacks.",
+    language: "Java",
+    reporter: "Ananya",
+  },
+  {
+    id: 6,
+    title: "Improper Error Handling in File Upload",
+    description:
+      "The Go file upload handler fails to check for file size limits and error responses, leading to potential denial-of-service attacks.",
+    language: "Go",
+    reporter: "Priya",
+  },
+  {
+    id: 7,
+    title: "Uncaught TypeError in JavaScript Payment Gateway",
+    description:
+      "Uncaught TypeError occurs when calling a method on 'undefined' due to missing validation in the payment.js file.",
+    language: "JavaScript",
+    reporter: "Vikram",
+  },
+  {
+    id: 8,
+    title: "Remote Code Execution in Python Script",
+    description:
+      "A deserialization vulnerability in Python allows attackers to execute arbitrary code via malicious input passed to the pickle.load function.",
+    language: "Python",
+    reporter: "Neha",
+  },
+  {
+    id: 9,
+    title: "CSRF in PHP Account Update",
+    description:
+      "Cross-Site Request Forgery (CSRF) vulnerability exists in the account settings update form in userUpdate.php, allowing unauthorized actions.",
+    language: "PHP",
+    reporter: "Farhan",
+  },
+  {
+    id: 10,
+    title: "Buffer Overflow in C Login Module",
+    description:
+      "Buffer overflow vulnerability in the C application allows attackers to overwrite the return address, causing remote code execution.",
+    language: "C++",
+    reporter: "Sneha",
   },
 ];
 
@@ -61,14 +110,17 @@ const Home = () => {
             an extensive history in decentralized technology.
           </p>
           <div className="space-y-4 sm:space-y-0 sm:space-x-4 flex flex-col sm:flex-row justify-center items-center">
-            <button className="bg-white hover:bg-gray-500 px-6 py-3 text-black rounded-md transition">
+            <Link
+              to="/create-issue"
+              className="bg-white hover:bg-gray-500 hover:text-white px-6 py-3 text-black rounded-md transition"
+            >
               Create Issue <span>&#8594;</span>
-            </button>
+            </Link>
             <Link
               to="/explore"
               className="bg-transparent border border-gray-600 px-6 py-3 text-gray-200 rounded-md hover:bg-gray-600 hover:text-white transition"
             >
-              View Open Issues
+              View All Open Issues
             </Link>
           </div>
         </div>

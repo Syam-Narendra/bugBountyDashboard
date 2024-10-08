@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { data } from "./home"; // assuming data includes a 'language' property
+import { data } from "./home";
 import { FaSearch } from "react-icons/fa";
 
 const Explore = () => {
@@ -14,7 +14,6 @@ const Explore = () => {
     "Go",
   ];
 
-  // Handle language filter changes
   const handleLanguageChange = (language: string) => {
     setSelectedLanguages((prevSelected) =>
       prevSelected.includes(language)
@@ -23,7 +22,6 @@ const Explore = () => {
     );
   };
 
-  // Filter data based on search term and selected languages
   const filteredData = data.filter(
     (item) =>
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -33,7 +31,6 @@ const Explore = () => {
 
   return (
     <div className="bg-black text-gray-100 min-h-screen flex flex-col sm:flex-row px-4 sm:px-6 lg:p-8">
-      {/* Sidebar for filters */}
       <div className="w-full sm:w-1/4 lg:w-1/5 h-full p-4 bg-[#131213] rounded-lg shadow-lg mb-8 sm:mb-0 sm:mr-8 flex-shrink-0">
         <h2 className="text-xl font-semibold mb-4">Filter by Language</h2>
         <div className="space-y-2">
@@ -57,7 +54,6 @@ const Explore = () => {
         </div>
       </div>
 
-      {/* Main content area */}
       <div className="flex-1">
         <div className="relative w-full sm:w-3/4 lg:w-1/2 mx-auto">
           <input
