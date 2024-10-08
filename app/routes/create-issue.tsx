@@ -26,7 +26,7 @@ const CreateIssue = () => {
             <input
               type="text"
               {...register("title", { required: true })}
-              className="mt-1 block w-4/5 md:w-3/4 p-2 border border-white text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+              className="mt-1 block w-4/5  p-2 border border-white text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
               placeholder="Brief title of the bug"
             />
             {errors.title && (
@@ -40,7 +40,7 @@ const CreateIssue = () => {
             </label>
             <textarea
               {...register("description", { required: true })}
-              className="mt-1 block w-4/5 md:w-3/4 p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+              className="mt-1 block w-4/5  p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
               placeholder="Detailed description of the bug"
               rows={4}
             />
@@ -57,7 +57,7 @@ const CreateIssue = () => {
             </label>
             <textarea
               {...register("steps", { required: true })}
-              className="mt-1 block w-4/5 md:w-3/4 p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+              className="mt-1 block w-4/5  p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
               placeholder="List the steps to reproduce the bug"
               rows={4}
             />
@@ -72,7 +72,7 @@ const CreateIssue = () => {
             </label>
             <select
               {...register("severity", { required: true })}
-              className="mt-1 block w-4/5 md:w-3/4 p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+              className="mt-1 block w-4/5  p-2 border border-white bg-black text-white rounded-md focus:outline-none"
             >
               <option value="">Select severity</option>
               <option value="low">Low</option>
@@ -92,7 +92,7 @@ const CreateIssue = () => {
             <input
               type="text"
               {...register("environment", { required: true })}
-              className="mt-1 block w-4/5 md:w-3/4 p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+              className="mt-1 block w-4/5 p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
               placeholder="E.g., Chrome, Firefox, or environment details"
             />
             {errors.environment && (
@@ -109,7 +109,7 @@ const CreateIssue = () => {
             <input
               type="text"
               {...register("technologies", { required: true })}
-              className="mt-1 block w-4/5 md:w-3/4 p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+              className="mt-1 block w-4/5  p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
               placeholder="List technologies and languages used"
             />
             {errors.technologies && (
@@ -126,7 +126,7 @@ const CreateIssue = () => {
             <input
               type="email"
               {...register("email", { required: true })}
-              className="mt-1 block w-4/5 md:w-3/4 p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+              className="mt-1 block w-4/5  p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
               placeholder="Your email address"
             />
             {errors.email && (

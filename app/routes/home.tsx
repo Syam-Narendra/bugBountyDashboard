@@ -95,33 +95,10 @@ const Home = () => {
 
   return (
     <div className="bg-black text-gray-100 min-h-screen flex flex-col items-center px-4 sm:px-6 lg:p-8">
-      <div className="text-center mt-5 flex justify-evenly w-full">
+      <div className="text-center mt-5 flex flex-col gap-3 items-center w-full">
         <div>
           <div className="bg-gray-800 text-gray-100 px-4 py-2 rounded-full inline-block mb-6 text-sm sm:text-base">
             <span>Open-access issue tracker for everyone!</span>
-          </div>
-          <div className="flex items-start mb-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold">
-              iHunt: Your Bug Hunting Adventure Begins
-            </h1>
-          </div>
-          <p className="text-lg sm:text-xl md:text-2xl mb-10 max-w-2xl mx-auto">
-            Sigma Prime is a leading blockchain security and research firm with
-            an extensive history in decentralized technology.
-          </p>
-          <div className="space-y-4 sm:space-y-0 sm:space-x-4 flex flex-col sm:flex-row justify-center items-center">
-            <Link
-              to="/create-issue"
-              className="bg-white hover:bg-gray-500 hover:text-white px-6 py-3 text-black rounded-md transition"
-            >
-              Create Issue <span>&#8594;</span>
-            </Link>
-            <Link
-              to="/explore"
-              className="bg-transparent border border-gray-600 px-6 py-3 text-gray-200 rounded-md hover:bg-gray-600 hover:text-white transition"
-            >
-              View All Open Issues
-            </Link>
           </div>
         </div>
         <div className="bg-black border border-white p-6 rounded-lg w-2/5">
@@ -196,6 +173,21 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+        <div className="space-y-4 sm:space-y-0 sm:space-x-4 flex flex-col sm:flex-row justify-center items-center">
+          <Link
+            to="/create-issue"
+            className="bg-white hover:bg-gray-500 hover:text-white px-6 py-3 text-black rounded-md transition"
+          >
+            Create Issue <span>&#8594;</span>
+          </Link>
+          <Link
+            to="/explore"
+            className="bg-transparent border border-gray-600 px-6 py-3 text-gray-200 rounded-md hover:bg-gray-600 hover:text-white transition"
+          >
+            View All Open Issues
+          </Link>
+        </div>
       </div>
 
       <div className="relative w-1/2  max-w-lg mt-12">
@@ -211,23 +203,21 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 mt-12 w-full max-w-6xl">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 w-full max-w-6xl">
         {filteredData.length > 0 ? (
           filteredData.map((item) => (
             <div
               key={item.id}
-              className="col-span-full bg-[#272726] flex justify-between text-gray-100 p-6 rounded-lg shadow-lg transition transform hover:scale-105 w-full"
+              className="bg-[#272726] text-gray-100 p-6 rounded-lg shadow-lg transition transform hover:scale-105"
             >
               <div>
                 <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                <p className="text-gray-400 mb-4">Reporter : {item.reporter}</p>
+                <p className="text-gray-400 mb-4">Reporter: {item.reporter}</p>
                 <p>{item.description}</p>
               </div>
-              {/* <div className="mt-4 flex justify-end"> */}
-              <button className="bg-blue-600 text-white px-4 py-2 self-end rounded-lg hover:bg-blue-700 transition">
+              <button className="bg-blue-600 text-white px-4 py-2 mt-4 rounded-lg hover:bg-blue-700 transition">
                 View Issue
               </button>
-              {/* </div> */}
             </div>
           ))
         ) : (

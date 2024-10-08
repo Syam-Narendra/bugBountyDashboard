@@ -7,11 +7,16 @@ const Explore = () => {
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
 
   const programmingLanguages: string[] = [
+    "Freemarker",
     "JavaScript",
     "Python",
     "Java",
     "C++",
     "Go",
+    "Ruby",
+    "PHP",
+    "TypeScript",
+    "Rust",
   ];
 
   const handleLanguageChange = (language: string) => {

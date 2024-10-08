@@ -25,12 +25,12 @@ const Dashboard = () => {
 
   return (
     <nav className="w-full flex justify-between items-center px-4 py-4 bg-black shadow-md">
-      <div className="text-xl font-semibold flex items-center">
+      <Link to="/home" className="text-xl font-semibold flex items-center">
         <div className="bg-black p-2 rounded-full">
           <span className="fas fa-bug" aria-label="bug bounty icon"></span>
         </div>
         <span className="ml-2">iHunt</span>
-      </div>
+      </Link>
       <div className="hidden md:flex space-x-6">
         {links.map((each) => (
           <Link
