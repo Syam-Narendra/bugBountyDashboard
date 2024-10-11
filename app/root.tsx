@@ -34,8 +34,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Dashboard />
-        {children}
+        <div className="flex flex-col">
+          <Dashboard />
+          <div>{children}</div>
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>

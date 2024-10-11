@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 const Explore = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
 
   const programmingLanguages: string[] = [
     "Freemarker",
@@ -19,6 +20,8 @@ const Explore = () => {
     "Rust",
   ];
 
+  const projects: string[] = ["Power Platform", "ICICI", "Aurora Studio", "Arx-cli", "Khoros"];
+
   const handleLanguageChange = (language: string) => {
     setSelectedLanguages((prevSelected) =>
       prevSelected.includes(language)
@@ -27,11 +30,21 @@ const Explore = () => {
     );
   };
 
+  const handleProjectChange = (project: string) => {
+    setSelectedProjects((prevSelected) =>
+      prevSelected.includes(project)
+        ? prevSelected.filter((proj) => proj !== project)
+        : [...prevSelected, project]
+    );
+  };
+
   const filteredData = data.filter(
     (item) =>
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (selectedLanguages.length === 0 ||
-        selectedLanguages.includes(item.language))
+        selectedLanguages.includes(item.language)) &&
+      (selectedProjects.length === 0 ||
+        selectedProjects.includes(item.project))
   );
 
   return (
@@ -53,6 +66,27 @@ const Explore = () => {
                 className="ml-2 text-sm font-medium text-gray-300"
               >
                 {language}
+              </label>
+            </div>
+          ))}
+        </div>
+
+        <h2 className="text-xl font-semibold mb-4 mt-8">Filter by Projects</h2>
+        <div className="space-y-2">
+          {projects.map((project) => (
+            <div key={project} className="flex items-center">
+              <input
+                type="checkbox"
+                id={project}
+                checked={selectedProjects.includes(project)}
+                onChange={() => handleProjectChange(project)}
+                className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
+              />
+              <label
+                htmlFor={project}
+                className="ml-2 text-sm font-medium text-gray-300"
+              >
+                {project}
               </label>
             </div>
           ))}
