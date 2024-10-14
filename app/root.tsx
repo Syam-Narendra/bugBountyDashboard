@@ -6,6 +6,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
+import "@radix-ui/themes/styles.css";
 
 import "./tailwind.css";
 import Dashboard from "./customComponents/Dashboard";

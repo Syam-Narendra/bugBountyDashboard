@@ -1,8 +1,17 @@
+import { Link, useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import { data } from "./home";
 import { FaSearch } from "react-icons/fa";
+import { BugReport } from "./create-issue";
+import { Badge } from "@radix-ui/themes";
+
+export const loader = async () => {
+  const res = await fetch("http://127.0.0.1:3000/api/get-all-bugs");
+  const data = await res.json();
+  return data;
+};
 
 const Explore = () => {
+  const data = useLoaderData<typeof loader>() as BugReport[];
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
@@ -20,7 +29,13 @@ const Explore = () => {
     "Rust",
   ];
 
-  const projects: string[] = ["Power Platform", "ICICI", "Aurora Studio", "Arx-cli", "Khoros"];
+  const projects: string[] = [
+    "Power Platform",
+    "ICICI",
+    "Aurora Studio",
+    "Arx-cli",
+    "Khoros",
+  ];
 
   const handleLanguageChange = (language: string) => {
     setSelectedLanguages((prevSelected) =>
@@ -40,11 +55,11 @@ const Explore = () => {
 
   const filteredData = data.filter(
     (item) =>
-      item.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      item.bugTitle.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (selectedLanguages.length === 0 ||
-        selectedLanguages.includes(item.language)) &&
+        selectedLanguages.includes(item.technologyUsed)) &&
       (selectedProjects.length === 0 ||
-        selectedProjects.includes(item.project))
+        selectedProjects.includes(item.projectName))
   );
 
   return (
@@ -111,19 +126,22 @@ const Explore = () => {
           {filteredData.length > 0 ? (
             filteredData.map((item) => (
               <div
-                key={item.id}
+                key={item.ID}
                 className="col-span-full bg-[#272726] flex justify-between text-gray-100 p-6 rounded-lg shadow-lg transition transform hover:scale-105 w-full"
               >
+                <Badge color="blue">In progress</Badge>
+
                 <div>
-                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-gray-400 mb-4">
-                    Reporter: {item.reporter}
-                  </p>
+                  <h3 className="text-xl font-bold mb-2">{item.bugTitle}</h3>
+                  <p className="text-gray-400 mb-4">Reporter: {item.name}</p>
                   <p>{item.description}</p>
                 </div>
-                <button className="bg-blue-600 text-white px-4 py-2 self-end rounded-lg hover:bg-blue-700 transition">
+                <Link
+                  to={`/issue/${item.ID}`}
+                  className="bg-blue-600 text-white px-4 py-2 self-end rounded-lg hover:bg-blue-700 transition"
+                >
                   View Issue
-                </button>
+                </Link>
               </div>
             ))
           ) : (

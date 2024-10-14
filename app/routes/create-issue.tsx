@@ -1,14 +1,50 @@
-import { CreateIssueAlert } from "~/customComponents/CreateIssueAlert";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+} from "~/components/ui/alert-dialog";
+import { CreateIssueAlert } from "~/customComponents/CreateIssueAlert";
+
+export interface BugReport {
+  ID: number;
+  roleName: string;
+  bugTitle: string;
+  description: string;
+  severityLevel: string;
+  browserEnv: string;
+  technologyUsed: string;
+  email: string;
+  name: string;
+  projectName: string;
+}
 
 const CreateIssue = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const onSubmit = (data: any) => {
-    console.log(data);
+  } = useForm<BugReport>();
+  const onSubmit = async (data: BugReport) => {
+    setIsLoading(true);
+    const res = await fetch("http://127.0.0.1:3000/api/create-bug", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const json = await res.json();
+    setIsLoading(false);
+    setIsSuccessOpen(true);
+
+    console.log(json);
   };
 
   return (
@@ -21,15 +57,29 @@ const CreateIssue = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-300">
+              Your Name
+            </label>
+            <input
+              type="text"
+              {...register("name", { required: true })}
+              className="mt-1 block w-4/5  p-2 border border-white text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
+              placeholder="Brief title of the bug"
+            />
+            {errors.name && (
+              <span className="text-red-500 text-sm">Title is required</span>
+            )}
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-300">
               Bug Title
             </label>
             <input
               type="text"
-              {...register("title", { required: true })}
+              {...register("bugTitle", { required: true })}
               className="mt-1 block w-4/5  p-2 border border-white text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
               placeholder="Brief title of the bug"
             />
-            {errors.title && (
+            {errors.bugTitle && (
               <span className="text-red-500 text-sm">Title is required</span>
             )}
           </div>
@@ -53,25 +103,10 @@ const CreateIssue = () => {
 
           <div>
             <label className="block text-sm font-medium text-gray-300">
-              Steps to Reproduce
-            </label>
-            <textarea
-              {...register("steps", { required: true })}
-              className="mt-1 block w-4/5  p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
-              placeholder="List the steps to reproduce the bug"
-              rows={4}
-            />
-            {errors.steps && (
-              <span className="text-red-500 text-sm">Steps are required</span>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-300">
               Severity Level
             </label>
             <select
-              {...register("severity", { required: true })}
+              {...register("severityLevel", { required: true })}
               className="mt-1 block w-4/5  p-2 border border-white bg-black text-white rounded-md focus:outline-none"
             >
               <option value="">Select severity</option>
@@ -80,7 +115,7 @@ const CreateIssue = () => {
               <option value="high">High</option>
               <option value="critical">Critical</option>
             </select>
-            {errors.severity && (
+            {errors.severityLevel && (
               <span className="text-red-500 text-sm">Severity is required</span>
             )}
           </div>
@@ -91,11 +126,11 @@ const CreateIssue = () => {
             </label>
             <input
               type="text"
-              {...register("environment", { required: true })}
+              {...register("browserEnv", { required: true })}
               className="mt-1 block w-4/5 p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
               placeholder="E.g., Chrome, Firefox, or environment details"
             />
-            {errors.environment && (
+            {errors.browserEnv && (
               <span className="text-red-500 text-sm">
                 Environment is required
               </span>
@@ -108,11 +143,11 @@ const CreateIssue = () => {
             </label>
             <input
               type="text"
-              {...register("technologies", { required: true })}
+              {...register("technologyUsed", { required: true })}
               className="mt-1 block w-4/5  p-2 border border-white bg-black text-white rounded-md focus:ring focus:ring-blue-500 focus:outline-none"
               placeholder="List technologies and languages used"
             />
-            {errors.technologies && (
+            {errors.technologyUsed && (
               <span className="text-red-500 text-sm">
                 This field is required
               </span>
@@ -141,11 +176,34 @@ const CreateIssue = () => {
               type="submit"
               className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-500"
             >
-              Submit Bug
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white"></div>
+                </div>
+              ) : (
+                "Submit"
+              )}
             </button>
           </div>
         </form>
       </div>
+
+      <AlertDialog open={isSuccessOpen}>
+        <AlertDialogContent className="min-w-fit m-8">
+          <AlertDialogHeader>
+            <AlertDialogDescription>
+              <div className="p-6 text-white rounded-lg shadow-lg mx-auto">
+                <h1 className="text-3xl font-bold mb-4">Issue Created</h1>
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setIsSuccessOpen(false)}>
+              Ok
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

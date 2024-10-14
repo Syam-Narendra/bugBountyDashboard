@@ -1,106 +1,21 @@
-import { Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Progress } from "~/components/ui/progress";
+import { BugReport } from "./create-issue";
 
-export const data = [
-  {
-    id: 1,
-    title: "SQL Injection in Login Endpoint",
-    description:
-      "A SQL injection vulnerability exists in the 'authenticateUser' method in LoginService.java, allowing attackers to manipulate the login query.",
-    language: "Java",
-    reporter: "Aisha",
-    project: "Aurora Studio",
-  },
-  {
-    id: 2,
-    title: "Goroutine Leak in HTTP Server",
-    description:
-      "In the Go application, the HTTP server creates goroutines for each incoming request but fails to properly close them, causing a memory leak over time.",
-    language: "Go",
-    reporter: "Ravi",
-    project: "Aurora Studio",
-  },
-  {
-    id: 3,
-    title: "NullPointerException in Payment Processing",
-    description:
-      "NullPointerException occurs when calling 'processPayment' in PaymentService.java without verifying if the payment object is null.",
-    language: "Java",
-    reporter: "Suresh",
-    project: "Khoros",
-  },
-  {
-    id: 4,
-    title: "Race Condition in Data Sync",
-    description:
-      "A race condition in the Go application's data synchronization process leads to inconsistent state between distributed services.",
-    language: "Go",
-    reporter: "Megha",
-    project: "Khoros",
-  },
-  {
-    id: 5,
-    title: "Cross-Site Scripting (XSS) in User Profile",
-    description:
-      "The user profile form in ProfileService.java does not sanitize input, making it vulnerable to stored XSS attacks.",
-    language: "Java",
-    reporter: "Ananya",
-    project: "Power Platform",
-  },
-  {
-    id: 6,
-    title: "Improper Error Handling in File Upload",
-    description:
-      "The Go file upload handler fails to check for file size limits and error responses, leading to potential denial-of-service attacks.",
-    language: "Go",
-    reporter: "Priya",
-    project: "ICICI",
-  },
-  {
-    id: 7,
-    title: "Uncaught TypeError in JavaScript Payment Gateway",
-    description:
-      "Uncaught TypeError occurs when calling a method on 'undefined' due to missing validation in the payment.js file.",
-    language: "JavaScript",
-    reporter: "Vikram",
-    project: "Arx-cli",
-  },
-  {
-    id: 8,
-    title: "Remote Code Execution in Python Script",
-    description:
-      "A deserialization vulnerability in Python allows attackers to execute arbitrary code via malicious input passed to the pickle.load function.",
-    language: "Python",
-    reporter: "Neha",
-    project: "Project D",
-  },
-  {
-    id: 9,
-    title: "CSRF in PHP Account Update",
-    description:
-      "Cross-Site Request Forgery (CSRF) vulnerability exists in the account settings update form in userUpdate.php, allowing unauthorized actions.",
-    language: "PHP",
-    reporter: "Farhan",
-    project: "Power Platform",
-  },
-  {
-    id: 10,
-    title: "Buffer Overflow in C Login Module",
-    description:
-      "Buffer overflow vulnerability in the C application allows attackers to overwrite the return address, causing remote code execution.",
-    language: "C++",
-    reporter: "Sneha",
-    project: "Arx-cli",
-  },
-];
+export const loader = async () => {
+  const res = await fetch("http://127.0.0.1:3000/api/get-all-bugs");
+  const data = await res.json();
+  return data;
+};
 
 const Home = () => {
+  const data = useLoaderData() as BugReport[];
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredData = data.filter((item) =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    item.bugTitle.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -217,17 +132,20 @@ const Home = () => {
         {filteredData.length > 0 ? (
           filteredData.map((item) => (
             <div
-              key={item.id}
+              key={item.ID}
               className="bg-[#272726] text-gray-100 p-6 rounded-lg shadow-lg transition transform hover:scale-105"
             >
               <div>
-                <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                <p className="text-gray-400 mb-4">Reporter: {item.reporter}</p>
-                <p>{item.description}</p>
+                <h3 className="text-xl font-bold mb-2">{item.bugTitle}</h3>
+                <p className="text-gray-400 mb-4">Reporter: {item.name}</p>
+                <p className="mb-4">{item.description}</p>
               </div>
-              <button className="bg-blue-600 text-white px-4 py-2 mt-4 rounded-lg hover:bg-blue-700 transition">
+              <Link
+                to={`/issue/${item.ID}`}
+                className="bg-blue-600 text-white px-4 py-2 mt-4 rounded-lg hover:bg-blue-700 transition"
+              >
                 View Issue
-              </button>
+              </Link>
             </div>
           ))
         ) : (
